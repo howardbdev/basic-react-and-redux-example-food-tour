@@ -1,26 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Restaurants from './Restaurants'
+import { restaurants } from './restaurant_list.js'
+import { connect } from 'react-redux'
+import { getRestaurants } from './actions/restaurants'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super()
+
+  }
+
+  // what lifecycle method would I use for an initial API request?
+  componentDidMount() {
+    // console.log(`#1 in CDM there are ${this.state.restaurants.length} restaurants before setState`)
+    // this.setState({
+    //   restaurants: restaurants
+    // }, () => console.log(`#2 in CDM there are ${this.state.restaurants.length} restaurants before setState`))
+    // console.log("#3")
+
+    this.props.getRestaurants(restaurants)
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <Restaurants />
+      </div>
+    )
+  }
+
 }
 
-export default App;
+export default connect(null, {getRestaurants})(App);
